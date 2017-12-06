@@ -4,13 +4,41 @@
 
 const path = require('path')
 
+var appData = require('../data.json')
+var seller = appData.seller
+var goods = appData.goods
+var ratings = appData.ratings
+
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      "/api": {
+        changeOrigin: true,
+        bypass: function (req, res, proxyOptions) {
+          console.log(req.url);
+          if (req.url.indexOf("seller")>-1) {
+            res.json({
+              errno: 0,
+              data: seller
+            })
+          } else if (req.url.indexOf("goods") > -1) {
+            res.json({
+              errno: 0,
+              data: goods
+            })
+          } else if (req.url.indexOf("ratings") > -1) {
+            res.json({
+              errno: 0,
+              data: ratings
+            })
+          }
+          return true;
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -32,7 +60,7 @@ module.exports = {
      * Source Maps
      */
 
-    // https://webpack.js.org/configuration/devtool/#development
+    // https://webpack.js.org/configuration/devtool/#development 'eval-source-map' 'source-map'
     devtool: 'eval-source-map',
 
     // If you have problems debugging vue-files in devtools,
