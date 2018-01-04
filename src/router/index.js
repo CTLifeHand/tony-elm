@@ -6,6 +6,7 @@ import Goods from '@/components/Goods'
 import Seller from '@/components/Seller'
 import Ratings from '@/components/Ratings'
 
+// https://router.vuejs.org/zh-cn/essentials/history-mode.html
 Vue.use(Router)
 
 export default new Router({
